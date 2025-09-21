@@ -8,20 +8,29 @@ import { Question, QuestionType } from "./interfaces/question";
 export function makeBlankQuestion(
     id: number,
     name: string,
-    type: QuestionType
+    type: QuestionType,
 ): Question {
-    return {};
+    return {
+        id,
+        name,
+        type,
+        body: "",
+        expected: "",
+        options: [],
+        points: 1,
+        published: false,
+    };
 }
 
 /**
  * Consumes a question and a potential `answer`, and returns whether or not
  * the `answer` is correct. You should check that the `answer` is equal to
  * the `expected`, ignoring capitalization and trimming any whitespace.
- *
- * HINT: Look up the `trim` and `toLowerCase` functions.
  */
 export function isCorrect(question: Question, answer: string): boolean {
-    return false;
+    return (
+        answer.trim().toLowerCase() === question.expected.trim().toLowerCase()
+    );
 }
 
 /**
@@ -31,91 +40,82 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
-    return false;
+    if (question.type === "short_answer_question") {
+        return true;
+    }
+    return question.options.includes(answer);
 }
 
 /**
  * Consumes a question and produces a string representation combining the
- * `id` and first 10 characters of the `name`. The two strings should be
- * separated by ": ". So for example, the question with id 9 and the
- * name "My First Question" would become "9: My First Q".
+ * `id` and first 10 characters of the `name`.
  */
 export function toShortForm(question: Question): string {
-    return "";
+    return `${question.id}: ${question.name.substring(0, 10)}`;
 }
 
 /**
- * Consumes a question and returns a formatted string representation as follows:
- *  - The first line should be a hash sign, a space, and then the `name`
- *  - The second line should be the `body`
- *  - If the question is a `multiple_choice_question`, then the following lines
- *      need to show each option on its line, preceded by a dash and space.
- *
- * The example below might help, but don't include the border!
- * ----------Example-------------
- * |# Name                      |
- * |The body goes here!         |
- * |- Option 1                  |
- * |- Option 2                  |
- * |- Option 3                  |
- * ------------------------------
- * Check the unit tests for more examples of what this looks like!
+ * Consumes a question and returns a formatted string representation.
  */
 export function toMarkdown(question: Question): string {
-    return "";
+    let result = `# ${question.name}\n${question.body}`;
+    if (question.type === "multiple_choice_question") {
+        result +=
+            "\n" + question.options.map((opt) => `- ${opt}`).join("\n");
+    }
+    return result;
 }
 
 /**
- * Return a new version of the given question, except the name should now be
- * `newName`.
+ * Return a new version of the given question, except the name should now be `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
-    return question;
+    return { ...question, name: newName };
 }
 
 /**
- * Return a new version of the given question, except the `published` field
- * should be inverted. If the question was not published, now it should be
- * published; if it was published, now it should be not published.
+ * Return a new version of the given question, except the `published` field should be inverted.
  */
 export function publishQuestion(question: Question): Question {
-    return question;
+    return { ...question, published: !question.published };
 }
 
 /**
- * Create a new question based on the old question, copying over its `body`, `type`,
- * `options`, `expected`, and `points` without changes. The `name` should be copied
- * over as "Copy of ORIGINAL NAME" (e.g., so "Question 1" would become "Copy of Question 1").
- * The `published` field should be reset to false.
+ * Duplicate a question, with a new id, name = "Copy of ...", and published = false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    return oldQuestion;
+    return {
+        ...oldQuestion,
+        id,
+        name: `Copy of ${oldQuestion.name}`,
+        published: false,
+    };
 }
 
 /**
- * Return a new version of the given question, with the `newOption` added to
- * the list of existing `options`. Remember that the new Question MUST have
- * its own separate copy of the `options` list, rather than the same reference
- * to the original question's list!
- * Check out the subsection about "Nested Fields" for more information.
+ * Add a new option to the list of options (with a copy of the array).
  */
 export function addOption(question: Question, newOption: string): Question {
-    return question;
+    return { ...question, options: [...question.options, newOption] };
 }
 
 /**
- * Consumes an id, name, and two questions, and produces a new question.
- * The new question will use the `body`, `type`, `options`, and `expected` of the
- * `contentQuestion`. The second question will provide the `points`.
- * The `published` status should be set to false.
- * Notice that the second Question is provided as just an object with a `points`
- * field; but the function call would be the same as if it were a `Question` type!
+ * Merge two questions: keep content from contentQuestion, but points from other.
  */
 export function mergeQuestion(
     id: number,
     name: string,
     contentQuestion: Question,
-    { points }: { points: number }
+    { points }: { points: number },
 ): Question {
-    return contentQuestion;
+    return {
+        id,
+        name,
+        body: contentQuestion.body,
+        type: contentQuestion.type,
+        options: [...contentQuestion.options],
+        expected: contentQuestion.expected,
+        points,
+        published: false,
+    };
 }
