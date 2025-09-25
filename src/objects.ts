@@ -1,14 +1,14 @@
 import { Question, QuestionType } from "./interfaces/question";
 
 /**
- * Create a new blank question with the given `id`, `name`, and `type`.
- * `body` and `expected` should be empty, `options` empty array, `points` = 1,
- * `published` = false.
+ * Create a new blank question with the given `id`, `name`, and `type. The `body` and
+ * `expected` should be empty strings, the `options` should be an empty list, the `points`
+ * should default to 1, and `published` should default to false.
  */
 export function makeBlankQuestion(
     id: number,
     name: string,
-    type: QuestionType
+    type: QuestionType,
 ): Question {
     return {
         id,
@@ -18,97 +18,104 @@ export function makeBlankQuestion(
         expected: "",
         options: [],
         points: 1,
-        published: false
+        published: false,
     };
 }
 
 /**
- * Checks if the provided answer is correct for the given question.
- * Ignores capitalization and trims whitespace.
+ * Consumes a question and a potential `answer`, and returns whether or not
+ * the `answer` is correct. You should check that the `answer` is equal to
+ * the `expected`, ignoring capitalization and trimming any whitespace.
  */
 export function isCorrect(question: Question, answer: string): boolean {
-    return question.expected.trim().toLowerCase() === answer.trim().toLowerCase();
+    return (
+        answer.trim().toLowerCase() === question.expected.trim().toLowerCase()
+    );
 }
 
 /**
- * Checks if an answer is valid for a question.
- * - For `short_answer_question` any answer is valid.
- * - For `multiple_choice_question` the answer must be one of the options.
+ * Consumes a question and a potential `answer`, and returns whether or not
+ * the `answer` is valid (but not necessarily correct). For a `short_answer_question`,
+ * any answer is valid. But for a `multiple_choice_question`, the `answer` must
+ * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
-    if (question.type === "short_answer_question") return true;
+    if (question.type === "short_answer_question") {
+        return true;
+    }
     return question.options.includes(answer);
 }
 
 /**
- * Returns a short string representation combining id and first 10 chars of name.
+ * Consumes a question and produces a string representation combining the
+ * `id` and first 10 characters of the `name`.
  */
 export function toShortForm(question: Question): string {
-    return `${question.id}: ${question.name.slice(0, 10)}`;
+    return `${question.id}: ${question.name.substring(0, 10)}`;
 }
 
 /**
- * Returns a Markdown representation of a question:
- * - # Name
- * - Body
- * - List of options (if multiple_choice_question)
+ * Consumes a question and returns a formatted string representation.
  */
 export function toMarkdown(question: Question): string {
-    let markdown = `# ${question.name}\n${question.body}`;
+    let result = `# ${question.name}\n${question.body}`;
     if (question.type === "multiple_choice_question") {
-        markdown += "\n" + question.options.map(o => `- ${o}`).join("\n");
+        result +=
+            "\n" + question.options.map((opt) => `- ${opt}`).join("\n");
     }
-    return markdown;
+    return result;
 }
 
 /**
- * Return a new question with the `name` updated.
+ * Return a new version of the given question, except the name should now be `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
     return { ...question, name: newName };
 }
 
 /**
- * Toggle the `published` status of a question.
+ * Return a new version of the given question, except the `published` field should be inverted.
  */
 export function publishQuestion(question: Question): Question {
     return { ...question, published: !question.published };
 }
 
 /**
- * Duplicate a question. Updates id and prepends "Copy of " to name.
- * Published is reset to false.
+ * Duplicate a question, with a new id, name = "Copy of ...", and published = false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
     return {
         ...oldQuestion,
         id,
         name: `Copy of ${oldQuestion.name}`,
-        published: false
+        published: false,
     };
 }
 
 /**
- * Add a new option to a question. Creates a new array for `options`.
+ * Add a new option to the list of options (with a copy of the array).
  */
 export function addOption(question: Question, newOption: string): Question {
     return { ...question, options: [...question.options, newOption] };
 }
 
 /**
- * Merge content from one question and points from another. Sets published to false.
+ * Merge two questions: keep content from contentQuestion, but points from other.
  */
 export function mergeQuestion(
     id: number,
     name: string,
     contentQuestion: Question,
-    { points }: { points: number }
+    { points }: { points: number },
 ): Question {
     return {
-        ...contentQuestion,
         id,
         name,
+        body: contentQuestion.body,
+        type: contentQuestion.type,
+        options: [...contentQuestion.options],
+        expected: contentQuestion.expected,
         points,
-        published: false
+        published: false,
     };
 }
