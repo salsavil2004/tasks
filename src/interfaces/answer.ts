@@ -1,13 +1,9 @@
-/***
- * A representation of a students' answer in a quizzing game
+/**
+ * A representation of an Answer corresponding to a Question
  */
 export interface Answer {
-    /** The ID of the question being answered. */
-    questionId: number;
-    /** The text that the student entered for their answer. */
-    text: string;
-    /** Whether or not the student has submitted this answer. */
-    submitted: boolean;
-    /** Whether or not the students' answer matched the expected. */
-    correct: boolean;
+    questionId: number;      // The id of the Question this answer belongs to
+    text: string;            // The submitted answer
+    submitted: boolean;      // Whether the student submitted the answer
+    correct: boolean;        // Whether the submitted answer is correct
 }
