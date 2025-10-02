@@ -19,7 +19,7 @@ function App(): React.JSX.Element {
                 Hi, my name is Salsavil Chowdhury!
             </header>
             <hr></hr>
-            {/* <DoubleHalf></DoubleHalf> */}
+            { <DoubleHalf></DoubleHalf> }
             <hr></hr>
             <ChooseTeam></ChooseTeam>
             <hr></hr>
