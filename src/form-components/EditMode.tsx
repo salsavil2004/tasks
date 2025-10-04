@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
 export function EditMode(): React.JSX.Element {
-    const [editMode, setEditMode] = useState<boolean>(false);
+    const [editing, setEditing] = useState<boolean>(false);
     const [name, setName] = useState<string>("Your Name");
     const [student, setStudent] = useState<boolean>(true);
 
@@ -13,37 +13,38 @@ export function EditMode(): React.JSX.Element {
                 type="switch"
                 id="edit-mode-switch"
                 label="Edit Mode"
-                checked={editMode}
-                onChange={(event) => setEditMode(event.target.checked)}
+                checked={editing}
+                onChange={(event) => {
+                    setEditing(event.target.checked);
+                }}
             />
-            {editMode ? (
+            {editing ? (
                 <div>
                     <Form.Group controlId="formName">
                         <Form.Label>Name:</Form.Label>
                         <Form.Control
-                            type="text"
                             value={name}
-                            onChange={(event) =>
-                                setName(event.target.value)
-                            }
+                            onChange={(event) => {
+                                setName(event.target.value);
+                            }}
                         />
                     </Form.Group>
-
                     <Form.Check
                         type="checkbox"
                         id="student-check"
                         label="Student"
                         checked={student}
-                        onChange={(event) =>
-                            setStudent(event.target.checked)
-                        }
+                        onChange={(event) => {
+                            setStudent(event.target.checked);
+                        }}
                     />
                 </div>
             ) : (
                 <div>
-                    {name} is {student ? "a student." : "not a student."}
+                    {name} is {student ? "a student" : "not a student"}.
                 </div>
             )}
+            <Button onClick={() => { setEditing(!editing); }}>Toggle Edit</Button>
         </div>
     );
 }

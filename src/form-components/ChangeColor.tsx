@@ -17,8 +17,6 @@ export function ChangeColor(): React.JSX.Element {
     return (
         <div>
             <h3>Change Color</h3>
-
-            {/* Radio buttons for colors */}
             {colors.map((c: string) => (
                 <div key={c}>
                     <input
@@ -26,13 +24,13 @@ export function ChangeColor(): React.JSX.Element {
                         name="color"
                         value={c}
                         checked={color === c}
-                        onChange={(event) => setColor(event.target.value)}
+                        onChange={(event) => {
+                            setColor(event.target.value);
+                        }}
                     />
                     <label style={{ marginLeft: "5px" }}>{c}</label>
                 </div>
             ))}
-
-            {/* Colored box display */}
             <div
                 data-testid="colored-box"
                 style={{

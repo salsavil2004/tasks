@@ -3,14 +3,12 @@ import { Form } from "react-bootstrap";
 
 export function MultipleChoiceQuestion({
     options,
-    expectedAnswer,
+    expectedAnswer
 }: {
     options: string[];
     expectedAnswer: string;
 }): React.JSX.Element {
     const [choice, setChoice] = useState<string>(options[0]);
-
-    // Determine if the user's choice matches the expected answer
     const isCorrect = choice === expectedAnswer;
 
     return (
@@ -20,7 +18,9 @@ export function MultipleChoiceQuestion({
                 <Form.Label>What is the correct answer?</Form.Label>
                 <Form.Select
                     value={choice}
-                    onChange={(event) => setChoice(event.target.value)}
+                    onChange={(event) => {
+                        setChoice(event.target.value);
+                    }}
                 >
                     {options.map((option: string) => (
                         <option key={option} value={option}>

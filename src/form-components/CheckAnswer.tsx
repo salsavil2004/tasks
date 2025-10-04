@@ -2,25 +2,28 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
 export function CheckAnswer({
-    expectedAnswer,
+    expectedAnswer
 }: {
     expectedAnswer: string;
 }): React.JSX.Element {
-    const [userAnswer, setUserAnswer] = useState<string>("");
-    const isCorrect = userAnswer === expectedAnswer;
+    const [answer, setAnswer] = useState<string>("");
 
     return (
         <div>
             <h3>Check Answer</h3>
-            <Form.Group controlId="formCheckAnswer">
+            <Form.Group controlId="formAnswer">
                 <Form.Label>Answer:</Form.Label>
                 <Form.Control
                     type="text"
-                    value={userAnswer}
-                    onChange={(event) => setUserAnswer(event.target.value)}
+                    value={answer}
+                    onChange={(event) => {
+                        setAnswer(event.target.value);
+                    }}
                 />
             </Form.Group>
-            <div>{isCorrect ? "✔️" : "❌"}</div>
+            <div>
+                {answer === expectedAnswer ? "✔️ Correct" : "❌ Incorrect"}
+            </div>
         </div>
     );
 }
