@@ -10,6 +10,11 @@ import { DoubleHalf } from "./bad-components/DoubleHalf";
 import { ColoredBox } from "./bad-components/ColoredBox";
 import { ShoveBox } from "./bad-components/ShoveBox";
 import { ChooseTeam } from "./bad-components/ChooseTeam";
+import { CheckAnswer } from "./form-components/CheckAnswer";
+import { GiveAttempts } from "./form-components/GiveAttempts";
+import { EditMode } from "./form-components/EditMode";
+import { MultipleChoiceQuestion } from "./form-components/MultipleChoiceQuestion";
+import { ChangeColor } from "./form-components/ChangeColor";
 
 function App(): React.JSX.Element {
     return (
@@ -18,26 +23,45 @@ function App(): React.JSX.Element {
                 UD CISC275 with React Hooks and TypeScript
                 Hi, my name is Salsavil Chowdhury!
             </header>
-            <hr></hr>
-            { <DoubleHalf></DoubleHalf> }
-            <hr></hr>
-            <ChooseTeam></ChooseTeam>
-            <hr></hr>
-            <ColoredBox></ColoredBox>
-            <hr></hr>
-            <ShoveBox></ShoveBox>
-            <hr></hr>
-            <Counter></Counter>
+
             <hr />
-            <RevealAnswer></RevealAnswer>
+            {/* Form components */}
+            <CheckAnswer expectedAnswer="42" />
             <hr />
-            <StartAttempt></StartAttempt>
+            <GiveAttempts />
             <hr />
-            <TwoDice></TwoDice>
+            <EditMode />
             <hr />
-            <ChangeType></ChangeType>
+            <ChangeColor />
             <hr />
-            <CycleHoliday></CycleHoliday>
+            <MultipleChoiceQuestion
+                options={["a", "b", "c"]}
+                expectedAnswer="b"
+            />
+            <hr />
+
+            {/* Bad components */}
+            <DoubleHalf />
+            <hr />
+            <ChooseTeam />
+            <hr />
+            <ColoredBox />
+            <hr />
+            <ShoveBox />
+            <hr />
+
+            {/* Other components */}
+            <Counter />
+            <hr />
+            <RevealAnswer />
+            <hr />
+            <StartAttempt />
+            <hr />
+            <TwoDice />
+            <hr />
+            <ChangeType />
+            <hr />
+            <CycleHoliday />
         </div>
     );
 }
