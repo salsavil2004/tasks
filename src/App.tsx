@@ -20,8 +20,8 @@ function App(): React.JSX.Element {
     return (
         <div className="App">
             <header className="App-header">
-                UD CISC275 with React Hooks and TypeScript
-                Hi, my name is Salsavil Chowdhury!
+                UD CISC275 with React Hooks and TypeScript Hello World! My name
+                is Salsavil Chowdhury!
             </header>
 
             <hr />
