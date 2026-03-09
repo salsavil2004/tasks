@@ -7,7 +7,7 @@ import React, { useState } from "react";
  * - Buttons update the attempts count and enable/disable states
  */
 export function StartAttempt(): React.JSX.Element {
-    const initialAttempts = 5;
+    const initialAttempts = 4;
     const [attempts, setAttempts] = useState<number>(initialAttempts);
     const [quizActive, setQuizActive] = useState<boolean>(false);
 
