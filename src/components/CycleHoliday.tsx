@@ -2,28 +2,28 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
 type Holiday = "🎃" | "🎄" | "🪔" | "🎏" | "🕯️";
-
 const ALPHABET_ORDER: Holiday[] = ["🎏", "🎃", "🕯️", "🪔", "🎄"];
 const YEAR_ORDER: Holiday[] = ["🎏", "🪔", "🎃", "🕯️", "🎄"];
 
 export function CycleHoliday(): React.JSX.Element {
-    const [holiday, setHoliday] = useState<Holiday>(ALPHABET_ORDER[0]);
+    const [currentHoliday, setCurrentHoliday] = useState<Holiday>(ALPHABET_ORDER[0]);
 
-    function nextAlphabet(): void {
-        const idx = ALPHABET_ORDER.indexOf(holiday);
-        setHoliday(ALPHABET_ORDER[(idx + 1) % ALPHABET_ORDER.length]);
+    function advanceByAlphabet(): void {
+        const currentIndex = ALPHABET_ORDER.indexOf(currentHoliday);
+        const nextIndex = (currentIndex + 1) % ALPHABET_ORDER.length;
+        setCurrentHoliday(ALPHABET_ORDER[nextIndex]);
     }
-
-    function nextYear(): void {
-        const idx = YEAR_ORDER.indexOf(holiday);
-        setHoliday(YEAR_ORDER[(idx + 1) % YEAR_ORDER.length]);
+    function advanceByYear(): void {
+        const currentIndex = YEAR_ORDER.indexOf(currentHoliday);
+        const nextIndex = (currentIndex + 1) % YEAR_ORDER.length;
+        setCurrentHoliday(YEAR_ORDER[nextIndex]);
     }
 
     return (
         <div>
-            <div>Holiday: {holiday}</div>
-            <Button onClick={nextAlphabet}>Advance by Alphabet</Button>
-            <Button onClick={nextYear}>Advance by Year</Button>
+            <div>Holiday: {currentHoliday}</div>
+            <Button onClick={advanceByAlphabet}>Advance by Alphabet</Button>
+            <Button onClick={advanceByYear}>Advance by Year</Button>
         </div>
     );
 }
