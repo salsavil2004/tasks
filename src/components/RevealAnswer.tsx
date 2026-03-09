@@ -14,4 +14,5 @@ export function RevealAnswer(): React.JSX.Element {
             {visible && <span>42</span>}
         </div>
     );
+    
 }
