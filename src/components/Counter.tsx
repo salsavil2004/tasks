@@ -10,4 +10,5 @@ export function Counter(): React.JSX.Element {
             <span style={{ marginLeft: "8px" }}>to {value}.</span>
         </div>
     );
+    
 }
