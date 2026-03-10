@@ -1,20 +1,40 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
+// Button that moves the box
 function ShoveBoxButton({
     position,
     setPosition,
 }: {
     position: number;
     setPosition: (newPosition: number) => void;
-}) {
+}): React.JSX.Element {
     return (
-        <Button onClick={() => { setPosition(position + 4); }}>
+        <Button onClick={() => setPosition(position + 4)}>
             Shove the Box
         </Button>
     );
 }
 
+// Box that moves based on the position prop
+function MoveableBox({ position }: { position: number }): React.JSX.Element {
+    return (
+        <div
+            data-testid="moveable-box"
+            style={{
+                width: "50px",
+                height: "50px",
+                backgroundColor: "lightblue",
+                border: "1px solid blue",
+                display: "inline-block",
+                verticalAlign: "bottom",
+                marginLeft: position + "px",
+            }}
+        ></div>
+    );
+}
+
+// Parent component
 export function ShoveBox(): React.JSX.Element {
     const [position, setPosition] = useState<number>(10);
 
@@ -22,20 +42,9 @@ export function ShoveBox(): React.JSX.Element {
         <div>
             <h3>Shove Box</h3>
             <span>The box is at: {position}</span>
-            <div>
+            <div style={{ marginTop: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
                 <ShoveBoxButton position={position} setPosition={setPosition} />
-                <div
-                    data-testid="moveable-box"
-                    style={{
-                        width: "50px",
-                        height: "50px",
-                        backgroundColor: "lightblue",
-                        border: "1px solid blue",
-                        display: "inline-block",
-                        verticalAlign: "bottom",
-                        marginLeft: position + "px",
-                    }}
-                ></div>
+                <MoveableBox position={position} />
             </div>
         </div>
     );
