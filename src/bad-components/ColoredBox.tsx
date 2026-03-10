@@ -11,7 +11,9 @@ function ChangeColor({
     colorIndex: number;
     setColorIndex: (index: number) => void;
 }): React.JSX.Element {
-    const handleClick = () => setColorIndex((colorIndex + 1) % COLORS.length);
+    const handleClick = () => {
+        setColorIndex((colorIndex + 1) % COLORS.length);
+    };
 
     return <Button onClick={handleClick}>Next Color</Button>;
 }
@@ -31,6 +33,7 @@ function ColorPreview({ colorIndex }: { colorIndex: number }): React.JSX.Element
         ></div>
     );
 }
+
 export function ColoredBox(): React.JSX.Element {
     const [colorIndex, setColorIndex] = useState<number>(DEFAULT_COLOR_INDEX);
 
