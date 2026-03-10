@@ -2,46 +2,42 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
 function Doubler({
-    value,
-    onChange,
+    dhValue,
+    setDhValue,
 }: {
-    value: number;
-    onChange: (newValue: number) => void;
+    dhValue: number;
+    setDhValue: (value: number) => void;
 }): React.JSX.Element {
-    return (
-        <Button onClick={() => onChange(value * 2)}>
-            Double
-        </Button>
-    );
+    const handleClick = () => {
+        setDhValue(dhValue * 2);
+    };
+
+    return <Button onClick={handleClick}>Double</Button>;
 }
 
 function Halver({
-    value,
-    onChange,
+    dhValue,
+    setDhValue,
 }: {
-    value: number;
-    onChange: (newValue: number) => void;
+    dhValue: number;
+    setDhValue: (value: number) => void;
 }): React.JSX.Element {
-    return (
-        <Button onClick={() => onChange(value / 2)}>
-            Halve
-        </Button>
-    );
+    const handleClick = () => {
+        setDhValue(dhValue * 0.5);
+    };
+
+    return <Button onClick={handleClick}>Halve</Button>;
 }
+
 export function DoubleHalf(): React.JSX.Element {
-    const [currentValue, setCurrentValue] = useState<number>(10);
-    const updateValue = (newValue: number) => setCurrentValue(() => newValue);
+    const [dhValue, setDhValue] = useState<number>(10);
 
     return (
         <div>
             <h3>Double Half</h3>
-            <div>
-                The current value is: <span>{currentValue}</span>
-            </div>
-            <div style={{ marginTop: "8px", display: "flex", gap: "8px" }}>
-                <Doubler value={currentValue} onChange={updateValue} />
-                <Halver value={currentValue} onChange={updateValue} />
-            </div>
+            <div>The current value is: <span>{dhValue}</span></div>
+            <Doubler dhValue={dhValue} setDhValue={setDhValue} />
+            <Halver dhValue={dhValue} setDhValue={setDhValue} />
         </div>
     );
 }
